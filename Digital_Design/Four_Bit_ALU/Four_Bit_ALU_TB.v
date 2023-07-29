@@ -1,34 +1,17 @@
-module alu_tb;
-
-	// Inputs
-	reg [3:0] a;
-	reg [3:0] b;
-	reg [2:0] s;
-	wire [7:0] y;
-	// Instantiate the Unit Under Test (UUT)
-	alu uut (
-		.a(a), 
-		.b(b), 
-		.s(s)
-	);
-
-	initial begin
-		// Initialize Inputs
-		a = 4'b1001;b = 4'b0011;s = 3'b000;
-
-		// Wait 100 ns for global reset to finish
-		#100 a = 4'b1001;b = 4'b1011;s = 3'b001;
-		#100 a = 4'b1001;b = 4'b0111;s = 3'b010;
-		#100 a = 4'b1101;b = 4'b1011;s = 3'b011;
-		#100 a = 4'b1011;b = 4'b0111;s = 3'b100;
-		#100 a = 4'b1010;b = 4'b1011;s = 3'b101;
-		#100 a = 4'b1110;b = 4'b0111;s = 3'b110;
-		#100 a = 4'b0101;b = 4'b1011;s = 3'b111;
-		
-        
-		// Add stimulus here
-
-	end
-      
+module Four_Bit_ALU_TB;
+reg [3:0] A,B;
+reg [2:0] S;
+wire [7:0] OUT;
+Four_Bit_ALU([3:0]A,[3:0]B,[2:0]S,OUT);
+initial 
+begin
+  #10 A[3:0] = 3'b001; B[3:0] = 3'b011; S[0] = 1'b0; S[1] = 1'b0 , S[2] = 1'b0;
+#10 S[0] = 1'b0; S[1] = 1'b0 , S[2] = 1'b0;
+#10 S[0] = 1'b0; S[1] = 1'b1 , S[2] = 1'b1;
+#10 S[0] = 1'b0; S[1] = 1'b1 , S[2] = 1'b0;
+#10 S[0] = 1'b1; S[1] = 1'b0 , S[2] = 1'b1;
+#10 S[0] = 1'b1; S[1] = 1'b0 , S[2] = 1'b0;
+#10 S[0] = 1'b1; S[1] = 1'b1 , S[2] = 1'b1;
+#10 S[0] = 1'b1; S[1] = 1'b1 , S[2] = 1'b0;
+end
 endmodule
-
