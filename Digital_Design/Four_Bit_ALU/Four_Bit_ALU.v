@@ -1,20 +1,21 @@
-module alu(
-    input [3:0] a,b,
-    input [2:0] s,
-    output reg [7:0] y
-    );
-
-always @(a,b,s) 
+module ALU(input [0:3]A,B,[0:2]S,output [0:7]OUT);
+always @(*)
 begin
-case(s)
-3'b000:y=a+b;//add
-3'b001:y=a-b;//sub
-3'b010:y=a*b;//mul
-3'b011:y=a/b;//div
-3'b100:y=a^b;//xor
-3'b101:y=~(a&b);//nand
-3'b110:y=a%b;//modulo
-default:y=(~a)+1;//2's complement
+case({S[0],S[1]})
+	3'b000 : OUT = A + B;
+	3'b001 : OUT = A - B;
+	3'b010 : OUT = A * B;
+	3'b011 : OUT = A & B;
+	3'b100 : OUT = A | B;
+	3'b101 : OUT = A ^ B;
+	3'b110 : begin
+			OUT[0:3] = ~A;
+			OUT[4:7] = ~B;
+		 end
+	3'b111 : begin
+			OUT[0:3] = ~A + 1'b;
+			OUT[4:7] = ~B + 1'b;
+		 end
 endcase
 end
 endmodule
